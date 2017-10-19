@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="仿饿了么购物车效果（UI效果）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="仿饿了么购物车效果（UI效果）">
+<meta property="og:url" content="http://yoursite.com/2017/08/06/仿饿了么购物车效果（UI效果）/index.html">
+<meta property="og:site_name" content="Necrom&#39;s Blog">
+<meta property="og:description" content="仿饿了么购物车效果（UI效果）">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/gaoyuyu/StickyListDemo/raw/master/captures/cart.gif">
+<meta property="og:image" content="https://github.com/gaoyuyu/StickyListDemo/raw/master/captures/bug.png">
+<meta property="og:image" content="http://img.blog.csdn.net/20170806134426637?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2FvX3l1eXU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-10-19T15:20:44.021Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="仿饿了么购物车效果（UI效果）">
+<meta name="twitter:description" content="仿饿了么购物车效果（UI效果）">
+<meta name="twitter:image" content="https://github.com/gaoyuyu/StickyListDemo/raw/master/captures/cart.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/06/仿饿了么购物车效果（UI效果）/"/>
+
+
+
+
+
+  <title>仿饿了么购物车效果（UI效果） | Necrom's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Necrom's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/06/仿饿了么购物车效果（UI效果）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Necrom">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Necrom's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">仿饿了么购物车效果（UI效果）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-06T13:47:15+08:00">
+                2017-08-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>仿饿了么购物车效果（UI效果）<br><a id="more"></a></p>
+<p> <img src="https://github.com/gaoyuyu/StickyListDemo/raw/master/captures/cart.gif" alt="images"></p>
+<blockquote>
+<ul>
+<li>右列表标题悬停</li>
+<li>左右列表滑动时联动</li>
+<li>添加购物车时动画效果</li>
+</ul>
+</blockquote>
+<h2 id="右列表标题悬停-amp-左右列表滑动时联动"><a href="#右列表标题悬停-amp-左右列表滑动时联动" class="headerlink" title="右列表标题悬停&amp;左右列表滑动时联动"></a>右列表标题悬停&amp;左右列表滑动时联动</h2><p>github开源库：<a href="https://github.com/emilsjolander/StickyListHeaders" target="_blank" rel="external">StickyListHeadersListView</a><br>StickyListHeadersListView使用：<a href="http://blog.csdn.net/zuiwuyuan/article/details/49872533" target="_blank" rel="external">http://blog.csdn.net/zuiwuyuan/article/details/49872533</a></p>
+<p>gradle添加依赖<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compile <span class="string">'se.emilsjolander:stickylistheaders:2.7.0'</span></div></pre></td></tr></table></figure></p>
+<p>主Layout简单，基本LinearLayout实现，左边列表直接用RecyclerView实现<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span></span></div><div class="line"><span class="tag">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/activity_main"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span></span></div><div class="line"><span class="tag">    <span class="attr">tools:context</span>=<span class="string">"com.gaoyy.stickylistdemo.MainActivity"</span></span></div><div class="line"><span class="tag">    &gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"300dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_above</span>=<span class="string">"@+id/linearLayout"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignParentLeft</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignParentStart</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignParentTop</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:orientation</span>=<span class="string">"horizontal"</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">android.support.v7.widget.RecyclerView</span></span></div><div class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">"@+id/left"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"0dp"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:layout_weight</span>=<span class="string">"0.3"</span>/&gt;</span></div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">se.emilsjolander.stickylistheaders.StickyListHeadersListView</span></span></div><div class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">"@+id/list"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"0dp"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:layout_weight</span>=<span class="string">"0.7"</span></span></div><div class="line"><span class="tag">            /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/linearLayout"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignParentBottom</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignParentLeft</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignParentStart</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:background</span>=<span class="string">"#433d3d"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:orientation</span>=<span class="string">"horizontal"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">"@+id/cart"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"50dp"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:padding</span>=<span class="string">"10dp"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:layout_marginLeft</span>=<span class="string">"10dp"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">"@mipmap/icon_cart"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>数据模拟，左Type右Sample，唯一需要注意的是，<strong>在初始化数据时，数据必须按照分组顺排列</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Sample</span></span></div><div class="line"><span class="class"></span>&#123;</div><div class="line">    <span class="comment">//item id</span></div><div class="line">    <span class="keyword">private</span> String id;</div><div class="line">    <span class="comment">//所属组id</span></div><div class="line">    <span class="keyword">private</span> String groupId;</div><div class="line">    <span class="comment">//item title</span></div><div class="line">    <span class="keyword">private</span> String title;</div><div class="line">    <span class="comment">//item desc</span></div><div class="line">    <span class="keyword">private</span> String desc;</div><div class="line">    <span class="comment">//组 title</span></div><div class="line">    <span class="keyword">private</span> String groupTitle;</div><div class="line">    <span class="comment">//数量</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Sample</span><span class="params">(String id, String groupId, String title, String desc, String groupTitle,<span class="keyword">int</span> count)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">this</span>.id = id;</div><div class="line">        <span class="keyword">this</span>.groupId = groupId;</div><div class="line">        <span class="keyword">this</span>.title = title;</div><div class="line">        <span class="keyword">this</span>.desc = desc;</div><div class="line">        <span class="keyword">this</span>.groupTitle = groupTitle;</div><div class="line">        <span class="keyword">this</span>.count= count;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//setter and getter...</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Type</span></span></div><div class="line"><span class="class"></span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> status;</div><div class="line">    <span class="keyword">private</span> String type;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Type</span><span class="params">(<span class="keyword">int</span> status, String type)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">this</span>.status = status;</div><div class="line">        <span class="keyword">this</span>.type = type;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//setter and getter...</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initData</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">int</span> random = (<span class="keyword">int</span>) (Math.random() * <span class="number">100</span> + <span class="number">1</span>);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">15</span>; i++)</div><div class="line">    &#123;</div><div class="line">        headerData.add(<span class="keyword">new</span> Type(<span class="number">0</span>, <span class="string">"种类"</span> + i));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; headerData.size(); i++)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; <span class="number">10</span>; k++)</div><div class="line">        &#123;</div><div class="line">            data.add(<span class="keyword">new</span> Sample(<span class="string">""</span> + k, <span class="string">""</span> + i, <span class="string">"种类"</span> + i + <span class="string">"   分类"</span> + k, (<span class="keyword">int</span>) (Math.random() * <span class="number">100</span> + <span class="number">1</span>) + <span class="string">""</span>, <span class="string">"种类"</span> + i, <span class="number">0</span>));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>StickyListHeadersListView的适配器需实现StickyListHeadersAdapter接口的<code>getHeaderView() getHeaderId()</code>方法，其中<code>getHeaderView()</code>与普通ListView的<code>getView()</code>实现一致，<code>getHeaderId()</code>则需要返回数据的组id<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SampleAdapter</span> <span class="keyword">extends</span> <span class="title">BaseAdapter</span> <span class="keyword">implements</span> <span class="title">StickyListHeadersAdapter</span></span></div><div class="line"><span class="class"></span>&#123;</div><div class="line">    ...</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> View <span class="title">getHeaderView</span><span class="params">(<span class="keyword">int</span> position, View convertView, ViewGroup parent)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        HeaderViewHolder headerViewHolder;</div><div class="line">        <span class="keyword">if</span> (convertView == <span class="keyword">null</span>)</div><div class="line">        &#123;</div><div class="line">            headerViewHolder = <span class="keyword">new</span> HeaderViewHolder();</div><div class="line">            convertView = inflater.inflate(R.layout.header, parent, <span class="keyword">false</span>);</div><div class="line">            headerViewHolder.header = (TextView) convertView.findViewById(R.id.header);</div><div class="line">            convertView.setTag(headerViewHolder);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            headerViewHolder = (HeaderViewHolder) convertView.getTag();</div><div class="line">        &#125;</div><div class="line">        headerViewHolder.header.setText(data.get(position).getGroupTitle());</div><div class="line">        <span class="keyword">return</span> convertView;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getHeaderId</span><span class="params">(<span class="keyword">int</span> position)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="comment">//return the first character of the country as ID because this is what headers are based upon</span></div><div class="line">        <span class="keyword">return</span> Long.parseLong(data.get(position).getGroupId());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>实现滑动时左右联动(左-ReListAdapter，右-SampleAdapter)<br>1.左边RecyclerView点击item时可调用StickyListHeadersListView的setSelection(position)来实现右边列表的显示。<strong>注意，这里的position传入的是item的position，不是header的组id</strong>。左列表item状态变化在adapter中实现，由Type中status控制（1-选中，0-未选中）；<br>2.右边列表滑动时，左边列表item的选中状态也相应变化。右列表滑动时，设置setOnScrollListener来监听item位置变化，更新左列表item选中状态；</p>
+<p>ReListAdapter<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(data.get(position).getStatus() == <span class="number">1</span>)</div><div class="line">&#123;</div><div class="line">    leftViewHolder.layout.setBackgroundColor(context.getResources().getColor(android.R.color.white));</div><div class="line">    leftViewHolder.tv.setTextColor(context.getResources().getColor(android.R.color.black));</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span>(data.get(position).getStatus() == <span class="number">0</span>)</div><div class="line">&#123;</div><div class="line">    leftViewHolder.layout.setBackgroundColor(context.getResources().getColor(R.color.gray));</div><div class="line">    leftViewHolder.tv.setTextColor(context.getResources().getColor(R.color.gray_text));</div><div class="line">&#125;</div><div class="line"></div><div class="line">...</div><div class="line"><span class="comment">//更新数据，刷新列表</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateData</span><span class="params">(List&lt;Type&gt; data)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">this</span>.data = data;</div><div class="line">    notifyDataSetChanged();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>MainActivity<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">reListAdapter.setOnItemClickListener(<span class="keyword">new</span> ReListAdapter.OnItemClickListener()</div><div class="line">&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemClick</span><span class="params">(View view, <span class="keyword">int</span> position)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">int</span> select = -<span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; data.size(); i++)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span> (Integer.valueOf(data.get(i).getGroupId()) == position)</div><div class="line">            &#123;</div><div class="line">                select = i;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        updateTypeList(position);</div><div class="line">        list.setSelection(select);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">list.setOnScrollListener(<span class="keyword">new</span> AbsListView.OnScrollListener()</div><div class="line">&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onScrollStateChanged</span><span class="params">(AbsListView view, <span class="keyword">int</span> scrollState)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onScroll</span><span class="params">(AbsListView view, <span class="keyword">int</span> firstVisibleItem, <span class="keyword">int</span> visibleItemCount, <span class="keyword">int</span> totalItemCount)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        Sample sample = data.get(firstVisibleItem);</div><div class="line">        <span class="keyword">int</span> groupId = Integer.valueOf(sample.getGroupId());</div><div class="line">        left.smoothScrollToPosition(groupId);</div><div class="line">        updateTypeList(groupId);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">updateTypeList</span><span class="params">(<span class="keyword">int</span> position)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; headerData.size(); i++)</div><div class="line">    &#123;</div><div class="line">        Type type = headerData.get(i);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (position == i)</div><div class="line">        &#123;</div><div class="line">            type.setStatus(<span class="number">1</span>);</div><div class="line">            headerData.remove(i);</div><div class="line">            headerData.add(i, type);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            type.setStatus(<span class="number">0</span>);</div><div class="line">            headerData.remove(i);</div><div class="line">            headerData.add(i, type);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    reListAdapter.updateData(headerData);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>这里有个BUG，当每组的数据量比较少时，即一屏显示完所有的数据或者余下的数据时，左边列表的选中状态会默认选中右边列表出现在顶部的item的组，下面的组选不到。原因在于右边列表的OnScrollListener，在onScroll方法中取到的是位于顶部item的position，暂时没有想到解决办法。</p>
+</blockquote>
+<p> <img src="https://github.com/gaoyuyu/StickyListDemo/raw/master/captures/bug.png" alt="images"></p>
+<p> 左右联动基本实现(&gt;.&lt;)</p>
+<h2 id="添加购物车动画效果实现"><a href="#添加购物车动画效果实现" class="headerlink" title="添加购物车动画效果实现"></a>添加购物车动画效果实现</h2><p>首先，添加add的点击监听，这里用接口的方式实现，在Activity中setListener，在BasicOnClickListener的onClick中传入itemViewHolder.parent，为了方便后续在Activity中添加动画效果。</p>
+<p>item布局<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span></span></div><div class="line"><span class="tag">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line"><span class="tag">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/item_parent"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">    &gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/title"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignParentTop</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginLeft</span>=<span class="string">"12dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginStart</span>=<span class="string">"12dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginTop</span>=<span class="string">"5dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_toEndOf</span>=<span class="string">"@+id/imageView"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_toRightOf</span>=<span class="string">"@+id/imageView"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">"TextView"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:textSize</span>=<span class="string">"20sp"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/desc"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignBottom</span>=<span class="string">"@+id/imageView"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignLeft</span>=<span class="string">"@+id/title"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignStart</span>=<span class="string">"@+id/title"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginBottom</span>=<span class="string">"5dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">"TextView"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:textColor</span>=<span class="string">"@color/colorAccent"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:textSize</span>=<span class="string">"18sp"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/imageView"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"80dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"80dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignParentLeft</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignParentStart</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignParentTop</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:scaleType</span>=<span class="string">"fitXY"</span></span></div><div class="line"><span class="tag">        <span class="attr">app:srcCompat</span>=<span class="string">"@mipmap/ic_launcher"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/add"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"25dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"25dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignBottom</span>=<span class="string">"@+id/desc"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignParentEnd</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignParentRight</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginEnd</span>=<span class="string">"24dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginRight</span>=<span class="string">"24dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">app:srcCompat</span>=<span class="string">"@mipmap/button_add"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/count"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignBaseline</span>=<span class="string">"@+id/desc"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignBottom</span>=<span class="string">"@+id/desc"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginEnd</span>=<span class="string">"12dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginRight</span>=<span class="string">"12dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_toLeftOf</span>=<span class="string">"@+id/add"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_toStartOf</span>=<span class="string">"@+id/add"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">"1"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:textSize</span>=<span class="string">"20sp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:visibility</span>=<span class="string">"visible"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/minus"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"25dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"25dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignBottom</span>=<span class="string">"@+id/count"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginRight</span>=<span class="string">"12dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_toLeftOf</span>=<span class="string">"@+id/count"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_toStartOf</span>=<span class="string">"@+id/count"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:visibility</span>=<span class="string">"visible"</span></span></div><div class="line"><span class="tag">        <span class="attr">app:srcCompat</span>=<span class="string">"@mipmap/button_minus"</span>/&gt;</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>SampleAdapter<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> OnOperationClickListener onOperationClickListener;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">OnOperationClickListener</span></span></div><div class="line"><span class="class"></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onOperationClick</span><span class="params">(View parent,View view, <span class="keyword">int</span> position)</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOnOperationClickListener</span><span class="params">(OnOperationClickListener listener)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">this</span>.onOperationClickListener = listener;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> View <span class="title">getView</span><span class="params">(<span class="keyword">int</span> position, View convertView, ViewGroup parent)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="comment">//...</span></div><div class="line">    </div><div class="line">    <span class="keyword">if</span>(onOperationClickListener != <span class="keyword">null</span>)</div><div class="line">    &#123;</div><div class="line">        itemViewHolder.add.setOnClickListener(<span class="keyword">new</span> BasicOnClickListener(itemViewHolder,position));</div><div class="line">        itemViewHolder.miuns.setOnClickListener(<span class="keyword">new</span> BasicOnClickListener(itemViewHolder,position));</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BasicOnClickListener</span> <span class="keyword">implements</span> <span class="title">View</span>.<span class="title">OnClickListener</span></span></div><div class="line"><span class="class"></span>&#123;</div><div class="line">    ItemViewHolder itemViewHolder;</div><div class="line">    <span class="keyword">int</span> position;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BasicOnClickListener</span><span class="params">(ItemViewHolder itemViewHolder,<span class="keyword">int</span> position)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">this</span>.itemViewHolder = itemViewHolder;</div><div class="line">        <span class="keyword">this</span>.position = position;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">switch</span> (view.getId())</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">case</span> R.id.add:</div><div class="line">                onOperationClickListener.onOperationClick(itemViewHolder.parent,itemViewHolder.add,position);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> R.id.minus:</div><div class="line">                onOperationClickListener.onOperationClick(itemViewHolder.parent,itemViewHolder.miuns,position);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>MainActivity<br>1.点击add时count加1，更新adapter，miuns显现，点击minus时count减1，当减到0时miuns隐藏，通过设置miuns的tag来实现。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">SampleAdapter</div><div class="line">getView()</div><div class="line">&#123;</div><div class="line">        <span class="keyword">if</span>(data.get(position).getCount() == <span class="number">0</span>)</div><div class="line">        &#123;</div><div class="line">            itemViewHolder.miuns.setAlpha(<span class="number">0f</span>);</div><div class="line">            itemViewHolder.count.setAlpha(<span class="number">0f</span>);</div><div class="line">            itemViewHolder.miuns.setTag(<span class="keyword">true</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            itemViewHolder.count.setAlpha(<span class="number">1f</span>);</div><div class="line">            itemViewHolder.miuns.setAlpha(<span class="number">1f</span>);</div><div class="line">            itemViewHolder.count.setText(data.get(position).getCount()+<span class="string">""</span>);</div><div class="line">            itemViewHolder.miuns.setTag(<span class="keyword">false</span>);</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>2.添加动画</p>
+<blockquote>
+<ul>
+<li>获取根布局，item中的add，购物车cart的坐标</li>
+<li>添加一个add的ImageView到根布局中，位置与item中的add相同</li>
+<li>为新增的add添加抛物线效果，设置transitionX和transitionY的属性动画，结束点的位于cart的位置，X轴上线性，Y轴上加速，同时设置渐隐动画。（这里的抛物线效果也可以用贝塞尔曲线实现）</li>
+<li>新增add在动画结束时从根布局remove掉</li>
+<li>新增add在动画结束时购物车cart设置一个放大的属性动画</li>
+</ul>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div></pre></td><td class="code"><pre><div class="line">    sampleAdapter.setOnOperationClickListener(<span class="keyword">new</span> SampleAdapter.OnOperationClickListener()</div><div class="line">    &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onOperationClick</span><span class="params">(View parent, View view, <span class="keyword">int</span> position)</span></span></div><div class="line"><span class="function">        </span>&#123;</div><div class="line">            ImageView add = (ImageView) parent.findViewById(R.id.add);</div><div class="line">            ImageView miuns = (ImageView) parent.findViewById(minus);</div><div class="line"></div><div class="line">            Sample sample = data.get(position);</div><div class="line">            <span class="keyword">int</span> count = sample.getCount();</div><div class="line">            <span class="keyword">switch</span> (view.getId())</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">case</span> R.id.add:</div><div class="line">                    <span class="comment">//添加时动画效果</span></div><div class="line">                    createAnim(add);</div><div class="line">                    </div><div class="line">                    count = count + <span class="number">1</span>;</div><div class="line">                    data.get(position).setCount(count);</div><div class="line"></div><div class="line">                    <span class="keyword">boolean</span> tag = ((<span class="keyword">boolean</span>) miuns.getTag());</div><div class="line">                    <span class="keyword">if</span> (tag)</div><div class="line">                    &#123;</div><div class="line">                        minusAnim(miuns);</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">else</span></div><div class="line">                    &#123;</div><div class="line">                        sampleAdapter.updateDataCount(data);</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> R.id.minus:</div><div class="line">                    count = count - <span class="number">1</span>;</div><div class="line">                    <span class="keyword">if</span> (count &lt; <span class="number">0</span>)</div><div class="line">                    &#123;</div><div class="line">                        count = <span class="number">0</span>;</div><div class="line">                    &#125;</div><div class="line">                    data.get(position).setCount(count);</div><div class="line">                    sampleAdapter.updateDataCount(data);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    </div><div class="line">    </div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 添加时动画效果</span></div><div class="line"><span class="comment"> * <span class="doctag">@param</span> add</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">createAnim</span><span class="params">(ImageView add)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="comment">//获取+号的坐标</span></div><div class="line">    <span class="keyword">int</span>[] addPoint = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</div><div class="line">    add.getLocationInWindow(addPoint);</div><div class="line"></div><div class="line">    <span class="comment">//获取购物车的坐标</span></div><div class="line">    <span class="keyword">int</span>[] cartPoint = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</div><div class="line">    cart.getLocationInWindow(cartPoint);</div><div class="line"></div><div class="line">    <span class="comment">//获父布局的坐标</span></div><div class="line">    <span class="keyword">int</span>[] parentPoint = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</div><div class="line">    activityMain.getLocationInWindow(parentPoint);</div><div class="line"></div><div class="line">    <span class="keyword">final</span> ImageView newAdd = <span class="keyword">new</span> ImageView(MainActivity.<span class="keyword">this</span>);</div><div class="line">    newAdd.setLayoutParams(<span class="keyword">new</span> RelativeLayout.LayoutParams(dip2px(MainActivity.<span class="keyword">this</span>, <span class="number">25</span>), dip2px(MainActivity.<span class="keyword">this</span>, <span class="number">25</span>)));</div><div class="line">    newAdd.setImageResource(R.mipmap.button_add);</div><div class="line">    newAdd.setX(addPoint[<span class="number">0</span>]);</div><div class="line">    newAdd.setY(addPoint[<span class="number">1</span>] - parentPoint[<span class="number">1</span>]);</div><div class="line">    activityMain.addView(newAdd);</div><div class="line"></div><div class="line">    <span class="comment">//X轴平移动画</span></div><div class="line">    ValueAnimator x = ValueAnimator.ofInt((<span class="keyword">int</span>) newAdd.getX(), cartPoint[<span class="number">0</span>]);</div><div class="line">    x.addUpdateListener(<span class="keyword">new</span> ValueAnimator.AnimatorUpdateListener()</div><div class="line">    &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationUpdate</span><span class="params">(ValueAnimator valueAnimator)</span></span></div><div class="line"><span class="function">        </span>&#123;</div><div class="line">            <span class="keyword">int</span> value = (<span class="keyword">int</span>) valueAnimator.getAnimatedValue();</div><div class="line">            newAdd.setTranslationX(value);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    <span class="comment">//设置线性插值器</span></div><div class="line">    x.setInterpolator(<span class="keyword">new</span> LinearInterpolator());</div><div class="line"></div><div class="line">    <span class="comment">//Y轴平移动画</span></div><div class="line">    ValueAnimator y = ValueAnimator.ofInt((<span class="keyword">int</span>) newAdd.getY(), cartPoint[<span class="number">1</span>] - parentPoint[<span class="number">1</span>]);</div><div class="line">    y.addUpdateListener(<span class="keyword">new</span> ValueAnimator.AnimatorUpdateListener()</div><div class="line">    &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationUpdate</span><span class="params">(ValueAnimator valueAnimator)</span></span></div><div class="line"><span class="function">        </span>&#123;</div><div class="line">            <span class="keyword">int</span> value = (<span class="keyword">int</span>) valueAnimator.getAnimatedValue();</div><div class="line">            newAdd.setTranslationY(value);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    <span class="comment">//设置加速插值器</span></div><div class="line">    y.setInterpolator(<span class="keyword">new</span> AccelerateInterpolator());</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">//新增ImageView加号的渐隐动画</span></div><div class="line">    ObjectAnimator newAddAlpha = ObjectAnimator.ofFloat(newAdd, <span class="string">"Alpha"</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>);</div><div class="line">    newAddAlpha.addListener(<span class="keyword">new</span> AnimatorListenerAdapter()</div><div class="line">    &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationEnd</span><span class="params">(Animator animation)</span></span></div><div class="line"><span class="function">        </span>&#123;</div><div class="line">            <span class="keyword">super</span>.onAnimationEnd(animation);</div><div class="line">            <span class="comment">//动画结束移除view</span></div><div class="line">            activityMain.removeView(newAdd);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    <span class="comment">//动画集合</span></div><div class="line">    AnimatorSet set = <span class="keyword">new</span> AnimatorSet();</div><div class="line">    set.playTogether(x, y, newAddAlpha);</div><div class="line">    set.start();</div><div class="line"></div><div class="line">    set.addListener(<span class="keyword">new</span> AnimatorListenerAdapter()</div><div class="line">    &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationEnd</span><span class="params">(Animator animation)</span></span></div><div class="line"><span class="function">        </span>&#123;</div><div class="line">            <span class="keyword">super</span>.onAnimationEnd(animation);</div><div class="line">            <span class="comment">//购物车的放大动画</span></div><div class="line">            cartAnim();</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 减号平移动画</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * <span class="doctag">@param</span> minus</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">minusAnim</span><span class="params">(<span class="keyword">final</span> View minus)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    ObjectAnimator translationXAnim = ObjectAnimator.ofFloat(minus, <span class="string">"TranslationX"</span>, <span class="number">100</span>, <span class="number">0</span>);</div><div class="line">    ObjectAnimator alphaAnim = ObjectAnimator.ofFloat(minus, <span class="string">"Alpha"</span>, <span class="number">0f</span>, <span class="number">1f</span>);</div><div class="line">    AnimatorSet set = <span class="keyword">new</span> AnimatorSet();</div><div class="line">    set.playTogether(translationXAnim, alphaAnim);</div><div class="line">    set.addListener(<span class="keyword">new</span> AnimatorListenerAdapter()</div><div class="line">    &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationEnd</span><span class="params">(Animator animation)</span></span></div><div class="line"><span class="function">        </span>&#123;</div><div class="line">            <span class="keyword">super</span>.onAnimationEnd(animation);</div><div class="line">            sampleAdapter.updateDataCount(data);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    set.start();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 购物车放大动画</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">cartAnim</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    ObjectAnimator cartScale = ObjectAnimator.ofFloat(cart, <span class="string">"ScaleXY"</span>, <span class="number">0.6f</span>, <span class="number">1.0f</span>);</div><div class="line">    cartScale.addUpdateListener(<span class="keyword">new</span> ValueAnimator.AnimatorUpdateListener()</div><div class="line">    &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationUpdate</span><span class="params">(ValueAnimator valueAnimator)</span></span></div><div class="line"><span class="function">        </span>&#123;</div><div class="line">            <span class="keyword">float</span> value = (<span class="keyword">float</span>) valueAnimator.getAnimatedValue();</div><div class="line">            cart.setScaleX(value);</div><div class="line">            cart.setScaleY(value);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    cartScale.start();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里需要注意的是，坐标计算。<br><img src="http://img.blog.csdn.net/20170806134426637?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2FvX3l1eXU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="坐标图"></p>
+<p>动画效果基本实现(&gt;.&lt;)</p>
+<p>源码：<br>github地址：<a href="https://github.com/gaoyuyu/StickyListDemo" target="_blank" rel="external">StickyListDemo</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/04/自定义Ripple效果的Colorfulbar/" rel="next" title="自定义Ripple效果的Colorfulbar">
+                <i class="fa fa-chevron-left"></i> 自定义Ripple效果的Colorfulbar
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.jpg"
+                alt="Necrom" />
+            
+              <p class="site-author-name" itemprop="name">Necrom</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/gaoyuyu" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:740514999@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#右列表标题悬停-amp-左右列表滑动时联动"><span class="nav-number">1.</span> <span class="nav-text">右列表标题悬停&左右列表滑动时联动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加购物车动画效果实现"><span class="nav-number">2.</span> <span class="nav-text">添加购物车动画效果实现</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Necrom</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

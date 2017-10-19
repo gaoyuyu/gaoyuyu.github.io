@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="近日在github上看到的一种效果。正好最近也在进阶学习自定义ViewGroup，便开始着手进行对这种效果小小实现了一把。原效果：出自于 open-android/Android1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义Ripple效果的Colorfulbar">
+<meta property="og:url" content="http://yoursite.com/2017/03/04/自定义Ripple效果的Colorfulbar/index.html">
+<meta property="og:site_name" content="Necrom&#39;s Blog">
+<meta property="og:description" content="近日在github上看到的一种效果。正好最近也在进阶学习自定义ViewGroup，便开始着手进行对这种效果小小实现了一把。原效果：出自于 open-android/Android1">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4037105-4825eae343c2a062.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="https://github.com/gaoyuyu/LearningCustomView/raw/master/captures/colorfulbar.gif">
+<meta property="og:updated_time" content="2017-10-19T15:23:09.069Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义Ripple效果的Colorfulbar">
+<meta name="twitter:description" content="近日在github上看到的一种效果。正好最近也在进阶学习自定义ViewGroup，便开始着手进行对这种效果小小实现了一把。原效果：出自于 open-android/Android1">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/4037105-4825eae343c2a062.gif?imageMogr2/auto-orient/strip">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/04/自定义Ripple效果的Colorfulbar/"/>
+
+
+
+
+
+  <title>自定义Ripple效果的Colorfulbar | Necrom's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Necrom's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/04/自定义Ripple效果的Colorfulbar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Necrom">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Necrom's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">自定义Ripple效果的Colorfulbar</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-04T23:19:59+08:00">
+                2017-03-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>近日在github上看到的一种效果。正好最近也在进阶学习自定义ViewGroup，便开始着手进行对这种效果小小实现了一把。<br>原效果：出自于 <a href="https://github.com/open-android/Android1" target="_blank" rel="external">open-android/Android1</a> </p>
+<a id="more"></a>
+<blockquote>
+<p><a href="https://github.com/open-android/Android1" target="_blank" rel="external">open-android/Android1</a>是<a href="https://github.com/open-android/Android" target="_blank" rel="external">open-android/Android</a> 下的一个子链接。</p>
+</blockquote>
+<p> <img src="http://upload-images.jianshu.io/upload_images/4037105-4825eae343c2a062.gif?imageMogr2/auto-orient/strip" alt=""></p>
+<p> 原创效果：效果实现有一些出入，不要在意这些细节。<br> <img src="https://github.com/gaoyuyu/LearningCustomView/raw/master/captures/colorfulbar.gif" alt="images"></p>
+<p> 思考如何去做：</p>
+<ol>
+<li>图标和文字是用自定义View还是自定义ViewGroup实现比较好</li>
+<li>图标和文字的动画</li>
+<li>Ripple效果的实现<br>回答：</li>
+<li>图标和文字用自定义ViewGroup实现比较好，中间摆放一个ImageView和TextView。为什么？为了验证到底是自定义View好还是自定义ViewGroup好，我花了2-3晚上去码代码去尝试，得出的结论是自定义ViewGroup显得更加简洁一点，对view的动画操作比较简单。</li>
+<li>动画自然是View的属性动画</li>
+<li>最外层是重写的LinearLayout，根据点击的坐标重绘，实现ripple效果。</li>
+</ol>
+<hr>
+<h4 id="AnimItem-图标icon-文字Text的ViewGroup"><a href="#AnimItem-图标icon-文字Text的ViewGroup" class="headerlink" title="AnimItem : 图标icon+文字Text的ViewGroup"></a><strong>AnimItem : 图标icon+文字Text的ViewGroup</strong></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnimItemV</span> <span class="keyword">extends</span> <span class="title">ViewGroup</span> <span class="keyword">implements</span> <span class="title">View</span>.<span class="title">OnClickListener</span></span></div></pre></td></tr></table></figure>
+<p>成员变量。其中，status为1时显示的只有icon，为2时显示icon和文字。初始值默认为1，显示icon。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> ImageView icon;</div><div class="line"><span class="keyword">private</span> TextView text;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> x;</div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> y;</div><div class="line"></div><div class="line"><span class="comment">//1-icon,2-icon+text</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> status = <span class="number">1</span>;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = AnimItemV.class.getSimpleName();</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">AnimItemV</span><span class="params">(Context context)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">this</span>(context, <span class="keyword">null</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">AnimItemV</span><span class="params">(Context context, AttributeSet attrs)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">this</span>(context, attrs, -<span class="number">1</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">AnimItemV</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">super</span>(context, attrs, defStyleAttr);</div><div class="line">    setOnClickListener(<span class="keyword">this</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@TargetApi</span>(Build.VERSION_CODES.LOLLIPOP)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">AnimItemV</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr, <span class="keyword">int</span> defStyleRes)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">super</span>(context, attrs, defStyleAttr, defStyleRes);</div><div class="line">    setOnClickListener(<span class="keyword">this</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>onMeassure<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    setTag(<span class="number">1</span>);</div><div class="line">    <span class="keyword">int</span> childCount = getChildCount();</div><div class="line">    <span class="keyword">int</span> widthMode = MeasureSpec.getMode(widthMeasureSpec);</div><div class="line">    <span class="keyword">int</span> sizeWidth = MeasureSpec.getSize(widthMeasureSpec);</div><div class="line">    <span class="keyword">int</span> heightMode = MeasureSpec.getMode(heightMeasureSpec);</div><div class="line">    <span class="keyword">int</span> sizeHeight = MeasureSpec.getSize(heightMeasureSpec);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * wrap_content下的width，height</span></div><div class="line"><span class="comment">     */</span></div><div class="line"></div><div class="line">    <span class="keyword">int</span> width = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> height = <span class="number">0</span>;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; childCount; i++)</div><div class="line">    &#123;</div><div class="line">        View childView = getChildAt(i);</div><div class="line">        measureChild(childView, widthMeasureSpec, heightMeasureSpec);</div><div class="line"></div><div class="line">        MarginLayoutParams childMargin = (MarginLayoutParams) childView.getLayoutParams();</div><div class="line"></div><div class="line">        <span class="comment">//子view的宽</span></div><div class="line">        <span class="keyword">int</span> childWidth = childView.getMeasuredWidth() + childMargin.leftMargin + childMargin.rightMargin;</div><div class="line">        <span class="comment">//子view的高</span></div><div class="line">        <span class="keyword">int</span> childHeight = childView.getMeasuredHeight() + childMargin.topMargin + childMargin.bottomMargin;</div><div class="line"></div><div class="line"></div><div class="line">        width = Math.max(width, childWidth);</div><div class="line">        height += childHeight;</div><div class="line"></div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    width = Math.max(width, height);</div><div class="line">    height = Math.max(width, height);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">//sizeWidth = width, sizeHeight = height是为了应对weight的情况</span></div><div class="line">    sizeWidth = width;</div><div class="line">    sizeHeight = height;</div><div class="line"></div><div class="line">    setMeasuredDimension((widthMode == MeasureSpec.EXACTLY) ? sizeWidth : width + getPaddingLeft() + getPaddingRight(),</div><div class="line">            (heightMode == MeasureSpec.EXACTLY) ? sizeHeight : height + getPaddingTop() + getPaddingBottom());</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>onLayout，坐标的计算并不复杂，画个草稿就可以想明白。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onLayout</span><span class="params">(<span class="keyword">boolean</span> changed, <span class="keyword">int</span> l, <span class="keyword">int</span> t, <span class="keyword">int</span> r, <span class="keyword">int</span> b)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">int</span> width = getWidth();</div><div class="line">        <span class="keyword">int</span> height = getHeight();</div><div class="line"></div><div class="line"></div><div class="line">        icon = (ImageView) getChildAt(<span class="number">0</span>);</div><div class="line">        MarginLayoutParams iconMargin = (MarginLayoutParams) icon.getLayoutParams();</div><div class="line">        <span class="keyword">int</span> iconWidth = icon.getMeasuredWidth() + iconMargin.leftMargin + iconMargin.rightMargin;</div><div class="line">        <span class="keyword">int</span> iconHeight = icon.getMeasuredHeight() + iconMargin.topMargin + iconMargin.bottomMargin;</div><div class="line"></div><div class="line"></div><div class="line">        text = (TextView) getChildAt(<span class="number">1</span>);</div><div class="line">        text.setAlpha(<span class="number">0.0f</span>);</div><div class="line">        MarginLayoutParams textMargin = (MarginLayoutParams) text.getLayoutParams();</div><div class="line">        <span class="keyword">int</span> textWidth = text.getMeasuredWidth() + textMargin.leftMargin + textMargin.rightMargin;</div><div class="line">        <span class="keyword">int</span> textHeight = text.getMeasuredHeight() + textMargin.topMargin + textMargin.bottomMargin;</div><div class="line"></div><div class="line"></div><div class="line">        <span class="keyword">int</span> lc = (width - iconWidth) / <span class="number">2</span>;</div><div class="line">        <span class="keyword">int</span> tc = (width - iconWidth) / <span class="number">2</span>;</div><div class="line">        <span class="keyword">int</span> rc = lc + iconWidth;</div><div class="line">        <span class="keyword">int</span> bc = tc + iconHeight;</div><div class="line"></div><div class="line">        icon.layout(lc, tc, rc, bc);</div><div class="line"></div><div class="line"></div><div class="line">        <span class="keyword">int</span> lc1 = (width - textWidth) / <span class="number">2</span>;</div><div class="line">        <span class="keyword">int</span> tc1 = bc;</div><div class="line">        <span class="keyword">int</span> rc1 = lc1 + textWidth;</div><div class="line">        <span class="keyword">int</span> bc1 = tc1 + textHeight;</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/**</span></div><div class="line"><span class="comment">         * -tc字体全部显示</span></div><div class="line"><span class="comment">         */</span></div><div class="line"><span class="comment">//            text.layout(lc1,tc1-tc,rc1,bc1-tc);</span></div><div class="line">        text.layout(lc1, tc1, rc1, bc1);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>最后是ImageView和TextView的属性动画，提供Public方法供外部调用。在写复原动画的时候要特别注意Y轴的数值变化，见注释。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * icon向上移动，text向上渐显动画</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startAnim</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    MarginLayoutParams iconMargin = (MarginLayoutParams) icon.getLayoutParams();</div><div class="line">    <span class="keyword">int</span> iconWidth = icon.getMeasuredWidth() + iconMargin.leftMargin + iconMargin.rightMargin;</div><div class="line">    <span class="keyword">int</span> tc = (getWidth() - iconWidth) / <span class="number">2</span>;</div><div class="line"></div><div class="line">    <span class="comment">//icon Y轴向上移动tc</span></div><div class="line">    ObjectAnimator iconYAnim = ObjectAnimator.ofFloat(icon, <span class="string">"TranslationY"</span>, -tc).setDuration(<span class="number">500</span>);</div><div class="line"></div><div class="line">    <span class="comment">//text透明度从0变到1</span></div><div class="line">    ObjectAnimator textAlphaAnim = ObjectAnimator.ofFloat(text, <span class="string">"Alpha"</span>, text.getAlpha(), <span class="number">1.0f</span>).setDuration(<span class="number">500</span>);</div><div class="line">    <span class="comment">//text Y轴向上移动tc</span></div><div class="line">    ObjectAnimator textYAnim = ObjectAnimator.ofFloat(text, <span class="string">"TranslationY"</span>, -tc).setDuration(<span class="number">500</span>);</div><div class="line"></div><div class="line"></div><div class="line">    AnimatorSet animatorSet = <span class="keyword">new</span> AnimatorSet();</div><div class="line">    animatorSet.playTogether(iconYAnim, textAlphaAnim, textYAnim);</div><div class="line">    animatorSet.start();</div><div class="line"></div><div class="line">    setTag(<span class="number">2</span>);</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 复原动画</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reverseAnim</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    MarginLayoutParams iconMargin = (MarginLayoutParams) icon.getLayoutParams();</div><div class="line">    <span class="keyword">int</span> iconWidth = icon.getMeasuredWidth() + iconMargin.leftMargin + iconMargin.rightMargin;</div><div class="line">    <span class="keyword">int</span> tc = (getWidth() - iconWidth) / <span class="number">2</span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     *注意这里是0，因为是-tc+tc，所以是0</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="comment">//icon Y轴向下移动0</span></div><div class="line">    ObjectAnimator iconYAnim = ObjectAnimator.ofFloat(icon, <span class="string">"TranslationY"</span>, <span class="number">0</span>).setDuration(<span class="number">500</span>);</div><div class="line"></div><div class="line">    <span class="comment">//text透明度从1变到0</span></div><div class="line">    ObjectAnimator textAlphaAnim = ObjectAnimator.ofFloat(text, <span class="string">"Alpha"</span>, text.getAlpha(), <span class="number">0.0f</span>).setDuration(<span class="number">500</span>);</div><div class="line">    <span class="comment">//text Y轴向下移动0</span></div><div class="line">    ObjectAnimator textYAnim = ObjectAnimator.ofFloat(text, <span class="string">"TranslationY"</span>, <span class="number">0</span>).setDuration(<span class="number">500</span>);</div><div class="line"></div><div class="line"></div><div class="line">    AnimatorSet animatorSet = <span class="keyword">new</span> AnimatorSet();</div><div class="line">    animatorSet.playTogether(iconYAnim, textAlphaAnim, textYAnim);</div><div class="line">    animatorSet.start();</div><div class="line"></div><div class="line">    setTag(<span class="number">1</span>);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>最后，加上onckick事件，通过tag的获取到的status来判断应该执行哪个动画效果。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">if</span> ((<span class="keyword">int</span>) getTag() == <span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">        startAnim();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span> ((<span class="keyword">int</span>) getTag() == <span class="number">2</span>)</div><div class="line">    &#123;</div><div class="line">        reverseAnim();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="AnimLinearLayout"><a href="#AnimLinearLayout" class="headerlink" title="AnimLinearLayout"></a><strong>AnimLinearLayout</strong></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnimLinearLayout</span> <span class="keyword">extends</span> <span class="title">LinearLayout</span></span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//存放一组颜色</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span>[] rippleColors;</div><div class="line"><span class="comment">//子ViewGroup的X轴坐标</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> childX;</div><div class="line"><span class="comment">//子ViewGroup的Y轴坐标</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> childY;</div><div class="line"><span class="comment">//ripple的半径</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">float</span> radius;</div><div class="line"><span class="comment">//ripple的颜色</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> rippleColor;</div><div class="line"></div><div class="line"><span class="comment">//....getter and setter....</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">AnimLinearLayout</span><span class="params">(Context context, AttributeSet attrs)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">this</span>(context, attrs, -<span class="number">1</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">AnimLinearLayout</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">super</span>(context, attrs, defStyleAttr);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@TargetApi</span>(Build.VERSION_CODES.LOLLIPOP)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">AnimLinearLayout</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr, <span class="keyword">int</span> defStyleRes)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">super</span>(context, attrs, defStyleAttr, defStyleRes);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在onAttachedToWindow中，遍历子view并为每一个子view设置OnTouchListener<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onAttachedToWindow</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">super</span>.onAttachedToWindow();</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">int</span> childCount = getChildCount();</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; childCount; i++)</div><div class="line">    &#123;</div><div class="line"></div><div class="line">        <span class="keyword">final</span> AnimItemV animItemV = (AnimItemV) getChildAt(i);</div><div class="line">        animItemV.setOnTouchListener(<span class="keyword">new</span> OnTouchListener()</div><div class="line">        &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouch</span><span class="params">(View view, MotionEvent motionEvent)</span></span></div><div class="line"><span class="function">            </span>&#123;</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; getChildCount(); i++)</div><div class="line">                &#123;</div><div class="line">                    <span class="keyword">if</span> (animItemV.getId() == getChildAt(i).getId())</div><div class="line">                    &#123;</div><div class="line">                        <span class="keyword">continue</span>;</div><div class="line">                    &#125;</div><div class="line">                    ((AnimItemV) getChildAt(i)).reverseAnim();</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在onInterceptTouchEvent中，手指按下时获取x，y坐标，手指松开时执行相应的动画效果。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onInterceptTouchEvent</span><span class="params">(MotionEvent event)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    Log.e(TAG, TAG + <span class="string">" onInterceptTouchEvent"</span>);</div><div class="line">    <span class="keyword">int</span> action = event.getAction();</div><div class="line">    <span class="keyword">switch</span> (action)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</div><div class="line">            <span class="keyword">int</span> childCount = getChildCount();</div><div class="line">            <span class="keyword">int</span> x = (<span class="keyword">int</span>) event.getX();</div><div class="line">            <span class="keyword">int</span> y = (<span class="keyword">int</span>) event.getY();</div><div class="line"></div><div class="line">            Log.e(TAG, <span class="string">"x--&gt;"</span> + x);</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; childCount; i++)</div><div class="line">            &#123;</div><div class="line">                AnimItemV animItemV = (AnimItemV) getChildAt(i);</div><div class="line">                <span class="keyword">if</span>(x&gt;=animItemV.getTop()&amp;&amp;x&lt;=animItemV.getRight())</div><div class="line">                &#123;</div><div class="line">                    setRippleColor(getResources().getColor(rippleColors[i]));</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line"></div><div class="line">            setChildX(x);</div><div class="line">            setChildY(y);</div><div class="line"></div><div class="line"></div><div class="line">            <span class="keyword">break</span>;</div><div class="line"></div><div class="line">        <span class="keyword">case</span> MotionEvent.ACTION_UP:</div><div class="line">            <span class="keyword">int</span> radius = Math.max(getWidth(), getHeight());</div><div class="line">            ValueAnimator animator = ValueAnimator.ofInt(<span class="number">0</span>, radius);</div><div class="line">            animator.addUpdateListener(<span class="keyword">new</span> ValueAnimator.AnimatorUpdateListener()</div><div class="line">            &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationUpdate</span><span class="params">(ValueAnimator valueAnimator)</span></span></div><div class="line"><span class="function">                </span>&#123;</div><div class="line">                    <span class="keyword">int</span> currentRadius = (<span class="keyword">int</span>) valueAnimator.getAnimatedValue();</div><div class="line">                    setRadius((<span class="keyword">float</span>) (currentRadius));</div><div class="line">                    invalidate();</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line"></div><div class="line">            animator.setInterpolator(<span class="keyword">new</span> AccelerateDecelerateInterpolator());</div><div class="line">            animator.start();</div><div class="line"></div><div class="line">            animator.addListener(<span class="keyword">new</span> AnimatorListenerAdapter()</div><div class="line">            &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationEnd</span><span class="params">(Animator animation)</span></span></div><div class="line"><span class="function">                </span>&#123;</div><div class="line">                    <span class="keyword">super</span>.onAnimationEnd(animation);</div><div class="line">                    setBackgroundColor(rippleColor);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.onInterceptTouchEvent(event);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>layout.xml 由于是继承自LinearLayout，所以LinearLayout的一些属性可以直接用。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">com.gaoyy.learningcustomview.view.AnimLinearLayout</span></span></div><div class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/activity_colorful_bar"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:background</span>=<span class="string">"#888888"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:gravity</span>=<span class="string">"center"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:orientation</span>=<span class="string">"horizontal"</span></span></div><div class="line"><span class="tag">        <span class="attr">tools:context</span>=<span class="string">"com.gaoyy.learningcustomview.ui.ColorfulBarActivity"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignParentBottom</span>=<span class="string">"true"</span>&gt;</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">com.gaoyy.learningcustomview.view.AnimItemV</span></span></div><div class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">"@+id/item1"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"0dp"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:layout_weight</span>=<span class="string">"1"</span></span></div><div class="line"><span class="tag">            &gt;</span></div><div class="line"></div><div class="line"></div><div class="line">            <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line"><span class="tag">                <span class="attr">android:layout_width</span>=<span class="string">"50dp"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:src</span>=<span class="string">"@mipmap/ic_moment"</span>/&gt;</span></div><div class="line"></div><div class="line">            <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line"><span class="tag">                <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:text</span>=<span class="string">"Moment"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:textColor</span>=<span class="string">"#ffffff"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:textSize</span>=<span class="string">"16sp"</span>/&gt;</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="tag">&lt;/<span class="name">com.gaoyy.learningcustomview.view.AnimItemV</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">com.gaoyy.learningcustomview.view.AnimItemV</span></span></div><div class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">"@+id/item2"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"0dp"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:layout_weight</span>=<span class="string">"1"</span></span></div><div class="line"><span class="tag">            &gt;</span></div><div class="line"></div><div class="line"></div><div class="line">            <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line"><span class="tag">                <span class="attr">android:layout_width</span>=<span class="string">"50dp"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:src</span>=<span class="string">"@mipmap/ic_friend"</span>/&gt;</span></div><div class="line"></div><div class="line">            <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line"><span class="tag">                <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:text</span>=<span class="string">"Friend"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:textColor</span>=<span class="string">"#ffffff"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:textSize</span>=<span class="string">"16sp"</span>/&gt;</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="tag">&lt;/<span class="name">com.gaoyy.learningcustomview.view.AnimItemV</span>&gt;</span></div><div class="line"></div><div class="line">        ...</div><div class="line"></div><div class="line"></div><div class="line">    <span class="tag">&lt;/<span class="name">com.gaoyy.learningcustomview.view.AnimLinearLayout</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>项目地址：<a href="https://github.com/gaoyuyu/LearningCustomView" target="_blank" rel="external">https://github.com/gaoyuyu/LearningCustomView</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/21/Material效果的下拉刷新MaterialRefreshLayout/" rel="next" title="Material效果的下拉刷新MaterialRefreshLayout">
+                <i class="fa fa-chevron-left"></i> Material效果的下拉刷新MaterialRefreshLayout
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/06/仿饿了么购物车效果（UI效果）/" rel="prev" title="仿饿了么购物车效果（UI效果）">
+                仿饿了么购物车效果（UI效果） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.jpg"
+                alt="Necrom" />
+            
+              <p class="site-author-name" itemprop="name">Necrom</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/gaoyuyu" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:740514999@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#AnimItem-图标icon-文字Text的ViewGroup"><span class="nav-number">1.</span> <span class="nav-text">AnimItem : 图标icon+文字Text的ViewGroup</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AnimLinearLayout"><span class="nav-number">2.</span> <span class="nav-text">AnimLinearLayout</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Necrom</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

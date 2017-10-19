@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Material效果的下拉刷新MaterialRefreshLayout">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Material效果的下拉刷新MaterialRefreshLayout">
+<meta property="og:url" content="http://yoursite.com/2016/12/21/Material效果的下拉刷新MaterialRefreshLayout/index.html">
+<meta property="og:site_name" content="Necrom&#39;s Blog">
+<meta property="og:description" content="Material效果的下拉刷新MaterialRefreshLayout">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/gaoyuyu/CustomRefreshLayoutDemo/raw/master/captures/refresh.gif">
+<meta property="og:image" content="https://github.com/gaoyuyu/CustomRefreshLayoutDemo/raw/master/captures/refresh_detail.png">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/005Xtdi2jw1f361bjqj2vj308c0dwwem.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/005Xtdi2jw1f361oje6h1j308c0dwdg0.jpg">
+<meta property="og:image" content="https://github.com/gaoyuyu/CustomRefreshLayoutDemo/raw/master/captures/prove.png">
+<meta property="og:updated_time" content="2017-10-19T15:21:18.909Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Material效果的下拉刷新MaterialRefreshLayout">
+<meta name="twitter:description" content="Material效果的下拉刷新MaterialRefreshLayout">
+<meta name="twitter:image" content="https://github.com/gaoyuyu/CustomRefreshLayoutDemo/raw/master/captures/refresh.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/21/Material效果的下拉刷新MaterialRefreshLayout/"/>
+
+
+
+
+
+  <title>Material效果的下拉刷新MaterialRefreshLayout | Necrom's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Necrom's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/21/Material效果的下拉刷新MaterialRefreshLayout/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Necrom">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Necrom's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Material效果的下拉刷新MaterialRefreshLayout</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-21T15:48:42+08:00">
+                2016-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Material效果的下拉刷新MaterialRefreshLayout<br><a id="more"></a></p>
+<p>效果图<br><img src="https://github.com/gaoyuyu/CustomRefreshLayoutDemo/raw/master/captures/refresh.gif" alt="images"></p>
+<hr>
+<p>参照<a href="https://github.com/android-cjj/BeautifulRefreshLayout" target="_blank" rel="external">android-cjj/BeautifulRefreshLayout</a>修改而来。</p>
+<p>核心知识点</p>
+<ol>
+<li>WaveView</li>
+<li>自定义FrameLayout</li>
+</ol>
+<p>####一、WaveView实现涟漪效果<br>涟漪效果是由贝塞尔曲线绘制而来，其中headHeight是上方矩形的高度，controlX和controlY是贝塞尔曲线控制点X,Y坐标点。<br>成员属性<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//屏幕宽度</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> mWidth;</div><div class="line"><span class="comment">//屏幕高度</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> mHeight;</div><div class="line"><span class="comment">//头部矩形高度</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> headHeight;</div><div class="line"><span class="comment">//贝塞尔曲线控制点X坐标值</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> controlX;</div><div class="line"><span class="comment">//控制点Y坐标值</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> controlY;</div><div class="line"><span class="comment">//颜色</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> waveColor =R.color.colorPrimaryDark;</div><div class="line"><span class="comment">//画笔</span></div><div class="line"><span class="keyword">private</span> Paint paint;</div><div class="line"><span class="comment">//Path</span></div><div class="line"><span class="keyword">private</span> Path path;</div></pre></td></tr></table></figure></p>
+<p>重写构造方法并初始化<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">WaveView</span><span class="params">(Context context)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">this</span>(context, <span class="keyword">null</span>, <span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">WaveView</span><span class="params">(Context context, AttributeSet attrs)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">this</span>(context, attrs, <span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">WaveView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">super</span>(context, attrs, defStyleAttr);</div><div class="line">    init();</div><div class="line">&#125;</div><div class="line"><span class="meta">@TargetApi</span>(Build.VERSION_CODES.LOLLIPOP)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">WaveView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr, <span class="keyword">int</span> defStyleRes)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">super</span>(context, attrs, defStyleAttr, defStyleRes);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>重写onSizeChanged获取屏幕高度和屏幕宽度<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSizeChanged</span><span class="params">(<span class="keyword">int</span> w, <span class="keyword">int</span> h, <span class="keyword">int</span> oldw, <span class="keyword">int</span> oldh)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">super</span>.onSizeChanged(w, h, oldw, oldh);</div><div class="line">    mWidth = w;</div><div class="line">    mHeight = h;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>接下来就可以开始绘制图形，没什么可说。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">super</span>.onDraw(canvas);</div><div class="line">    path.reset();</div><div class="line">    path.lineTo(<span class="number">0</span>, headHeight);</div><div class="line">    path.quadTo(controlX, headHeight + controlY, mWidth,headHeight);</div><div class="line">    path.lineTo(mWidth, <span class="number">0</span>);</div><div class="line">    canvas.drawPath(path, paint);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>####二、自定义FrameLayout<br>主要成员变量<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//子布局</span></div><div class="line"><span class="keyword">private</span> View mChildView;</div><div class="line"></div><div class="line"><span class="comment">//头部的高度</span></div><div class="line"><span class="keyword">protected</span> <span class="keyword">float</span> mHeadHeight = <span class="number">100</span>;</div><div class="line"></div><div class="line"><span class="comment">//贝塞尔曲线控制点Y轴坐标值</span></div><div class="line"><span class="keyword">protected</span> <span class="keyword">float</span> mControlY = <span class="number">180</span>;</div><div class="line"></div><div class="line"><span class="comment">//刷新的状态</span></div><div class="line"><span class="keyword">protected</span> <span class="keyword">boolean</span> isRefreshing;</div><div class="line"></div><div class="line"><span class="comment">//触摸获得Y的位置</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">float</span> mTouchY;</div><div class="line"></div><div class="line"><span class="comment">//当前Y的位置</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">float</span> mCurrentY;</div><div class="line"></div><div class="line"><span class="comment">//当前头部布局高度</span></div><div class="line"><span class="keyword">protected</span> <span class="keyword">int</span> mCurrentHeaderHeight = <span class="number">0</span>;</div><div class="line"><span class="comment">//子view在Y轴上移动的距离</span></div><div class="line"><span class="keyword">protected</span> <span class="keyword">float</span> offsetY = <span class="number">0</span>;</div><div class="line"><span class="comment">//刷新回调接口</span></div><div class="line"><span class="keyword">private</span> OnMaterialRefreshListener onMaterialRefreshListener;</div></pre></td></tr></table></figure></p>
+<p>其中OnMaterialRefreshListener是刷新回调接口。</p>
+<p>布局一开始加载进来，首先执行的是onAttachedToWindow(),在这里需要将头部布局<code>header.xml</code>加载进来，并addView()，<code>header.xml</code>比较简单，只有一个ImageView（箭头）、TextView（显示文字）、ProgressBar。<strong>注意到有一个<code>setRefreshing(isRefreshing)</code>方法也在这里调用了，稍后解释</strong>，这里也对mChildView，也就是通过<code>addView()</code>添加进来的头部布局设置了属性动画监听器，主要是为了实时重绘，改变高度。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onAttachedToWindow</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">super</span>.onAttachedToWindow();</div><div class="line">    Log.i(LOG_TAG, <span class="string">"onAttachedToWindow"</span>);</div><div class="line"></div><div class="line">    mHeaderLayout = LayoutInflater.from(getContext()).inflate(R.layout.header, <span class="keyword">null</span>);</div><div class="line">    mWaveView = (WaveView) mHeaderLayout.findViewById(R.id.waveview);</div><div class="line">    mTip = (TextView) mHeaderLayout.findViewById(R.id.tip);</div><div class="line">    mProgressBar = (ProgressBar) mHeaderLayout.findViewById(R.id.progressbar);</div><div class="line">    mArrow = (ImageView) mHeaderLayout.findViewById(arrow);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">this</span>.addView(mHeaderLayout);</div><div class="line"></div><div class="line">    mChildView = getChildAt(<span class="number">0</span>);</div><div class="line">    <span class="comment">//此时getChildCount()为2，因为上面调用了addView()，以及还有一个子view，所以有2个。index为0的View为头部布局</span></div><div class="line">    <span class="keyword">if</span> (getChildCount() &gt; <span class="number">2</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Can only have a child view"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (mChildView == <span class="keyword">null</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    setRefreshing(isRefreshing);</div><div class="line">    </div><div class="line">    ViewPropertyAnimator childViewPropertyAnimator = mChildView.animate();</div><div class="line">    childViewPropertyAnimator.setInterpolator(<span class="keyword">new</span> DecelerateInterpolator());</div><div class="line">    childViewPropertyAnimator.setUpdateListener(<span class="keyword">new</span> ValueAnimator.AnimatorUpdateListener()</div><div class="line">    &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationUpdate</span><span class="params">(ValueAnimator valueAnimator)</span></span></div><div class="line"><span class="function">        </span>&#123;</div><div class="line">            <span class="keyword">int</span> childHeight = (<span class="keyword">int</span>) mChildView.getTranslationY();</div><div class="line">            mHeaderLayout.getLayoutParams().height = childHeight;</div><div class="line">            mHeaderLayout.requestLayout();</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>接下来需要处理触摸事件，响应触摸事件。重写View的<code>onInterceptTouchEvent</code>和<code>onTouchEvent</code>，其中<code>onInterceptTouchEvent</code>是拦截事件，返回true表示触摸事件被拦截，false不拦截；<code>onTouchEvent</code>是响应事件，返回true表示该触摸事件得到处理，false不做响应。<code>canChildScrollUp()</code>判断是否可以上拉，在SwipeRrefreshLayout的源码中出现过。</p>
+<p>在<code>onInterceptTouchEvent()</code>方法中，主要对单指按下和移动动作进行处理，单指按下时获取手指到该view所在坐标系的Y轴距离（注意，不是屏幕默认坐标系，是view所在坐标系），同时，在单指移动时获取偏移量distanceY，相应做出拦截。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onInterceptTouchEvent</span><span class="params">(MotionEvent ev)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="comment">//刷新状态拦截事件,不做任何处理</span></div><div class="line">    <span class="keyword">if</span> (isRefreshing)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> action = ev.getAction();</div><div class="line">    <span class="keyword">switch</span> (action)</div><div class="line">    &#123;</div><div class="line">        <span class="comment">//单点触摸按下动作</span></div><div class="line">        <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</div><div class="line">            mTouchY = ev.getY();</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="comment">//单点触摸离开动作</span></div><div class="line">        <span class="keyword">case</span> MotionEvent.ACTION_UP:</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="comment">//单点触摸移动动作</span></div><div class="line">        <span class="keyword">case</span> MotionEvent.ACTION_MOVE:</div><div class="line">            <span class="keyword">float</span> currentY = ev.getY();</div><div class="line">            <span class="keyword">float</span> distanceY = currentY - mTouchY;</div><div class="line">            <span class="keyword">if</span> (distanceY &gt; <span class="number">0</span> &amp;&amp; !canChildScrollUp())</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.onInterceptTouchEvent(ev);</div><div class="line">&#125;</div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 判断是否可以上拉</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * <span class="doctag">@return</span> boolean</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canChildScrollUp</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">if</span> (mChildView == <span class="keyword">null</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (Build.VERSION.SDK_INT &lt; <span class="number">14</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span> (mChildView <span class="keyword">instanceof</span> AbsListView)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">final</span> AbsListView absListView = (AbsListView) mChildView;</div><div class="line">            <span class="keyword">return</span> absListView.getChildCount() &gt; <span class="number">0</span></div><div class="line">                    &amp;&amp; (absListView.getFirstVisiblePosition() &gt; <span class="number">0</span> || absListView.getChildAt(<span class="number">0</span>)</div><div class="line">                    .getTop() &lt; absListView.getPaddingTop());</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            <span class="keyword">return</span> ViewCompat.canScrollVertically(mChildView, -<span class="number">1</span>) || mChildView.getScrollY() &gt; <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> ViewCompat.canScrollVertically(mChildView, -<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>最后，在<code>onTouchEvent()</code>中，根据偏移量来改变相关控件的显示和隐藏。<br><strong>MotionEvent.ACTION_MOVE：</strong><br>先取得偏移量distanceY，值得注意的是，在上拉的时候distanceY会出现小于0的值，这里需要处理下，小于0的时候默认取0，否则整个mChildView会被上拉超出屏幕，不是想要的效果。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mCurrentY = event.getY();</div><div class="line"><span class="keyword">float</span> controlX = event.getX();</div><div class="line"><span class="keyword">float</span> distanceY = mCurrentY - mTouchY;</div><div class="line">distanceY = Math.max(<span class="number">0</span>, distanceY);</div></pre></td></tr></table></figure></p>
+<p>之后就需要在distanceY在某一个偏移区间变化的时候，动态改变header中各种view的状态，并添加动画效果。<br>为方便理解，可对照下图：<br><img src="https://github.com/gaoyuyu/CustomRefreshLayoutDemo/raw/master/captures/refresh_detail.png" alt="images"><br>1、distanceY在（0，mHeadHeight），无涟漪效果。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (distanceY &lt; mHeadHeight)</div><div class="line">&#123;</div><div class="line">    Log.e(LOG_TAG, <span class="string">"distanceY &lt; mHeadHeight"</span>);</div><div class="line">    mWaveView.setHeadHeight((<span class="keyword">int</span>) distanceY);</div><div class="line">    mWaveView.setControlY(<span class="number">0</span>);</div><div class="line">    mWaveView.setControlX((<span class="keyword">int</span>) controlX);</div><div class="line">    mWaveView.invalidate();</div><div class="line">    mCurrentHeaderHeight = (<span class="keyword">int</span>) distanceY;</div><div class="line">    offsetY = mCurrentHeaderHeight;</div><div class="line">    mArrow.setVisibility(View.GONE);</div><div class="line">    mTip.setVisibility(View.GONE);</div><div class="line">    mProgressBar.setVisibility(View.GONE);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>2、distanceY在（mHeadHeight，mHeadHeight + mControlY]。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (distanceY &gt; mHeadHeight &amp;&amp; (distanceY &lt;= (mHeadHeight + mControlY)))</div><div class="line">&#123;</div><div class="line">    Log.e(LOG_TAG, <span class="string">"distanceY &gt; mHeadHeight &amp;&amp; (distanceY &lt; (mHeadHeight + mControlY/2))"</span>);</div><div class="line">    <span class="keyword">float</span> currentWaveHeight = distanceY - mHeadHeight;</div><div class="line">    mWaveView.setHeadHeight((<span class="keyword">int</span>) mHeadHeight);</div><div class="line">    mWaveView.setControlY((<span class="keyword">int</span>) currentWaveHeight);</div><div class="line">    mWaveView.setControlX((<span class="keyword">int</span>) controlX);</div><div class="line">    mWaveView.invalidate();</div><div class="line">    mCurrentHeaderHeight = (<span class="keyword">int</span>) mHeadHeight;</div><div class="line">    offsetY = mHeadHeight + currentWaveHeight / <span class="number">2</span>;</div><div class="line">    mProgressBar.setVisibility(View.GONE);</div><div class="line">    <span class="keyword">if</span> (currentWaveHeight / mControlY &gt; <span class="number">0.5f</span>)</div><div class="line">    &#123;</div><div class="line">        mArrow.animate().setListener(<span class="keyword">new</span> AnimatorListenerAdapter()</div><div class="line">        &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationStart</span><span class="params">(Animator animation)</span></span></div><div class="line"><span class="function">            </span>&#123;</div><div class="line">                <span class="keyword">super</span>.onAnimationStart(animation);</div><div class="line">                mTip.setText(<span class="string">"下拉刷新"</span>);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationEnd</span><span class="params">(Animator animation)</span></span></div><div class="line"><span class="function">            </span>&#123;</div><div class="line">                <span class="keyword">super</span>.onAnimationEnd(animation);</div><div class="line">                <span class="comment">//动画结束后，显示控件，否则出现不和谐的过渡效果</span></div><div class="line">                mArrow.setVisibility(View.VISIBLE);</div><div class="line">                mTip.setVisibility(View.VISIBLE);</div><div class="line"></div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        mArrow.animate()</div><div class="line">                .rotationX(<span class="number">0</span>)</div><div class="line">                .setDuration(<span class="number">15</span>)</div><div class="line">                .start();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里的distanceY选择的范围是(mHeadHeight,mHeadHeight + mControlY],动画效果过渡更加自然，若是(mHeadHeight,mHeadHeight + mControlY/2]，圆弧一下子撑开，过渡效果粗糙。</p>
+<blockquote>
+<p>值得注意的是，为什么offsetY= mHeadHeight + currentWaveHeight / 2 ？<br>先介绍下贝塞尔曲线的基本原理<br><img src="http://ww4.sinaimg.cn/large/005Xtdi2jw1f361bjqj2vj308c0dwwem.jpg" alt="images"><br>连接DE，取点F，使得: AD:AB = BE:BC = DF:DE<br><img src="http://ww2.sinaimg.cn/large/005Xtdi2jw1f361oje6h1j308c0dwdg0.jpg" alt="images"><br>注：以上图片来源于<a href="http://www.gcssloop.com/customview/Path_Bezier" target="_blank" rel="external">安卓自定义View进阶-Path之贝塞尔曲线</a><br>好了，假设一种最极限的情况，是我们的控制点的X坐标是屏幕宽度的一半，如下图<br><img src="https://github.com/gaoyuyu/CustomRefreshLayoutDemo/raw/master/captures/prove.png" alt="images"><br>根据AD:AB = BE:BC = DF:DE，且三角形ABC是一个等边三角形，BC=AB，所以有AD = BE，根据三角形中位线定理和相似三角形，很容易知道BF是mControlY的1/2。</p>
+</blockquote>
+<p>3、distanceY 大于mHeadHeight + currentWaveHeight / 2<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">else</span> <span class="keyword">if</span> (distanceY &gt; (mHeadHeight + mControlY))</div><div class="line">&#123;</div><div class="line">    Log.e(LOG_TAG, <span class="string">"distanceY &gt; (mHeadHeight + mControlY / 2)"</span>);</div><div class="line">    mWaveView.setHeadHeight((<span class="keyword">int</span>) mHeadHeight);</div><div class="line">    mWaveView.setControlY((<span class="keyword">int</span>) mControlY);</div><div class="line">    mWaveView.setControlX((<span class="keyword">int</span>) controlX);</div><div class="line">    mWaveView.invalidate();</div><div class="line">    mCurrentHeaderHeight = (<span class="keyword">int</span>) mHeadHeight;</div><div class="line">    offsetY = mHeadHeight + mControlY / <span class="number">2</span>;</div><div class="line">    mProgressBar.setVisibility(View.GONE);</div><div class="line"></div><div class="line">    mArrow.animate().setListener(<span class="keyword">new</span> AnimatorListenerAdapter()</div><div class="line">    &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationStart</span><span class="params">(Animator animation)</span></span></div><div class="line"><span class="function">        </span>&#123;</div><div class="line">            <span class="keyword">super</span>.onAnimationStart(animation);</div><div class="line">            mTip.setText(<span class="string">"释放立即刷新"</span>);</div><div class="line">            mArrow.setVisibility(View.VISIBLE);</div><div class="line">            mTip.setVisibility(View.VISIBLE);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    mArrow.animate()</div><div class="line">            .rotationX(<span class="number">180</span>)</div><div class="line">            .setDuration(<span class="number">50</span>)</div><div class="line">            .start();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>4、最后设置下mChildView的偏移，和重绘头布局<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//设置子View的Y轴偏移量</span></div><div class="line">mChildView.setTranslationY(offsetY);</div><div class="line"><span class="comment">//重新设置header的高度</span></div><div class="line">mHeaderLayout.getLayoutParams().height = (<span class="keyword">int</span>) offsetY;</div><div class="line"><span class="comment">//重绘</span></div><div class="line">mHeaderLayout.requestLayout();</div></pre></td></tr></table></figure></p>
+<p>5、切记return true<br><strong>MotionEvent.ACTION_UP：</strong><br>处理手指离开时的逻辑相对简单，只需获取到的mChildView在Y轴上的偏移，大于一定的范围做出相应的处理即可。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//当偏移量大于mHeadHeight + mWaveHeight / 2时，刷新</span></div><div class="line"><span class="keyword">if</span> (mChildView.getTranslationY() &gt;= (mHeadHeight + mControlY / <span class="number">2</span>))</div><div class="line">&#123;</div><div class="line">    Log.e(LOG_TAG, <span class="string">"MotionEvent.ACTION_UP mChildView.getTranslationY() &gt;= (mHeadHeight + mControlY / 2)"</span>);</div><div class="line">    mChildView.animate().setListener(<span class="keyword">new</span> AnimatorListenerAdapter()</div><div class="line">    &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationStart</span><span class="params">(Animator animation)</span></span></div><div class="line"><span class="function">        </span>&#123;</div><div class="line">            <span class="keyword">super</span>.onAnimationStart(animation);</div><div class="line">            mArrow.setVisibility(View.GONE);</div><div class="line">            mProgressBar.setVisibility(View.VISIBLE);</div><div class="line">            mTip.setText(<span class="string">"正在加载"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    mChildView.animate().translationY(mHeadHeight).start();</div><div class="line"></div><div class="line">    isRefreshing = <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">if</span> (onMaterialRefreshListener != <span class="keyword">null</span>)</div><div class="line">    &#123;</div><div class="line">        onMaterialRefreshListener.onRefresh(MaterialRefreshLayout.<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span></div><div class="line">&#123;</div><div class="line">    mChildView.animate().setListener(<span class="keyword">new</span> AnimatorListenerAdapter()</div><div class="line">    &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationStart</span><span class="params">(Animator animation)</span></span></div><div class="line"><span class="function">        </span>&#123;</div><div class="line">            <span class="keyword">super</span>.onAnimationStart(animation);</div><div class="line">            mArrow.setVisibility(View.GONE);</div><div class="line">            mProgressBar.setVisibility(View.GONE);</div><div class="line">            mTip.setVisibility(View.GONE);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    mChildView.animate().translationY(<span class="number">0</span>).start();</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="keyword">return</span> <span class="keyword">true</span>;</div></pre></td></tr></table></figure></p>
+<p><strong>正在刷新状态</strong><br>当需要设置正在处于刷新状态时，layout初始化时mChildView为null， 通过打印日志是先执行setRefreshing在执行onAttachedToWindow，所以为null。<br>所以setRefreshing还需要放在onAttachedToWindow()方法里面。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRefreshing</span><span class="params">(<span class="keyword">boolean</span> refreshing)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    isRefreshing = refreshing;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (isRefreshing)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span> (mChildView == <span class="keyword">null</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        mChildView.animate().translationY(mHeadHeight).start();</div><div class="line">        mWaveView.setHeadHeight((<span class="keyword">int</span>) mHeadHeight);</div><div class="line">        mWaveView.setControlY(<span class="number">0</span>);</div><div class="line">        mWaveView.setControlX(<span class="number">1</span>);</div><div class="line">        mWaveView.invalidate();</div><div class="line">        mProgressBar.setVisibility(View.VISIBLE);</div><div class="line">        mTip.setText(<span class="string">"正在加载"</span>);</div><div class="line">        mTip.setVisibility(View.VISIBLE);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>刷新完成</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">finishRefresh</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">if</span> (mChildView != <span class="keyword">null</span>)</div><div class="line">    &#123;</div><div class="line">        mChildView.animate().translationY(<span class="number">0</span>).start();</div><div class="line">        setRefreshing(<span class="keyword">false</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>####三、基本用法<br>基本用法也是和SwipeRefreshLayout一样<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//正在刷新</span></div><div class="line">rl.setRefreshing(<span class="keyword">true</span>);</div><div class="line"></div><div class="line"><span class="comment">//设置监听</span></div><div class="line">rl.setOnMaterialRefreshListener(<span class="keyword">new</span> OnMaterialRefreshListener()</div><div class="line">&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRefresh</span><span class="params">(MaterialRefreshLayout refreshLayout)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        handler.sendEmptyMessageDelayed(<span class="number">0</span>,<span class="number">2000</span>);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">    </div><div class="line"><span class="keyword">private</span> Handler handler = <span class="keyword">new</span> Handler()</div><div class="line">&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">super</span>.handleMessage(msg);</div><div class="line">        <span class="comment">//完成刷新</span></div><div class="line">        rl.finishRefresh();</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>###源码<br>Github：<a href="https://github.com/gaoyuyu/CustomRefreshLayoutDemo" target="_blank" rel="external">https://github.com/gaoyuyu/CustomRefreshLayoutDemo</a></p>
+<hr>
+<p>相关推荐链接（内含贝塞尔曲线教程）：<br>自定义View教程：<a href="http://www.gcssloop.com/customview/CustomViewIndex" target="_blank" rel="external">安卓自定义View教程目录</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/30/Android自定义View之超简单圆形数字指示器/" rel="next" title="Android自定义View之超简单圆形数字指示器">
+                <i class="fa fa-chevron-left"></i> Android自定义View之超简单圆形数字指示器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/04/自定义Ripple效果的Colorfulbar/" rel="prev" title="自定义Ripple效果的Colorfulbar">
+                自定义Ripple效果的Colorfulbar <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.jpg"
+                alt="Necrom" />
+            
+              <p class="site-author-name" itemprop="name">Necrom</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/gaoyuyu" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:740514999@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Necrom</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
