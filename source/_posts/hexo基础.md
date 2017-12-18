@@ -13,14 +13,15 @@ tags:
  1. hexo clean
  2. hexo generate
  3. 本地调试 hexo server   ->  http://localhost:4000
- 
- ### hexo 部署至github
- 
-  1. hexo clean
-  2. hexo generate
-  3. 提交创建的md文件
-  4. 部署到github hexo deploy
- 
+
+### hexo 部署至github
+
+ 1. 提交创建的md文件，add-commit-push
+ 2. hexo clean
+ 3. hexo generate
+ 4. hexo deploy
+  
+
 
  
 
