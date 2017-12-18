@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Picasso本身并没有去“实现”本地缓存功能，而是让网络请求层去缓存http响应，其网络请求逻辑在picasso中对应的是DownLoader接口的实现。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Picasso+Okhttp3缓存优化">
+<meta property="og:url" content="http://yoursite.com/2017/12/18/Picasso+Okhttp3缓存优化/index.html">
+<meta property="og:site_name" content="Necrom&#39;s Blog">
+<meta property="og:description" content="Picasso本身并没有去“实现”本地缓存功能，而是让网络请求层去缓存http响应，其网络请求逻辑在picasso中对应的是DownLoader接口的实现。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-18T14:12:44.906Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Picasso+Okhttp3缓存优化">
+<meta name="twitter:description" content="Picasso本身并没有去“实现”本地缓存功能，而是让网络请求层去缓存http响应，其网络请求逻辑在picasso中对应的是DownLoader接口的实现。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/18/Picasso+Okhttp3缓存优化/"/>
+
+
+
+
+
+  <title>Picasso+Okhttp3缓存优化 | Necrom's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Necrom's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/18/Picasso+Okhttp3缓存优化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Necrom">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Necrom's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Picasso+Okhttp3缓存优化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-18T22:06:03+08:00">
+                2017-12-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Picasso本身并没有去“实现”本地缓存功能，而是让网络请求层去缓存http响应，其网络请求逻辑在picasso中对应的是DownLoader接口的实现。</p>
+<a id="more"></a>
+<ul>
+<li>配置gradle</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">compile <span class="string">'com.squareup.okhttp3:okhttp:3.9.0'</span></div><div class="line">compile <span class="string">'com.squareup.okhttp3:logging-interceptor:3.9.0'</span></div><div class="line">compile <span class="string">'com.squareup.picasso:picasso:2.5.2'</span></div></pre></td></tr></table></figure>
+<ul>
+<li><p>定义OKhttp3.0+ 版本的DownLoader</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> android.net.Uri;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.squareup.picasso.Downloader;</div><div class="line"><span class="keyword">import</span> com.squareup.picasso.NetworkPolicy;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"></div><div class="line"><span class="keyword">import</span> okhttp3.Cache;</div><div class="line"><span class="keyword">import</span> okhttp3.CacheControl;</div><div class="line"><span class="keyword">import</span> okhttp3.OkHttpClient;</div><div class="line"><span class="keyword">import</span> okhttp3.Request;</div><div class="line"><span class="keyword">import</span> okhttp3.ResponseBody;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ImageDownLoader</span> <span class="keyword">implements</span> <span class="title">Downloader</span></span></div><div class="line"><span class="class"></span>&#123;</div><div class="line">    OkHttpClient client = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageDownLoader</span><span class="params">(OkHttpClient client)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">this</span>.client = client;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Response <span class="title">load</span><span class="params">(Uri uri, <span class="keyword">int</span> networkPolicy)</span> <span class="keyword">throws</span> IOException</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line"></div><div class="line">        CacheControl cacheControl = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (networkPolicy != <span class="number">0</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span> (NetworkPolicy.isOfflineOnly(networkPolicy))</div><div class="line">            &#123;</div><div class="line">                cacheControl = CacheControl.FORCE_CACHE;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span></div><div class="line">            &#123;</div><div class="line">                CacheControl.Builder builder = <span class="keyword">new</span> CacheControl.Builder();</div><div class="line">                <span class="keyword">if</span> (!NetworkPolicy.shouldReadFromDiskCache(networkPolicy))</div><div class="line">                &#123;</div><div class="line">                    builder.noCache();</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (!NetworkPolicy.shouldWriteToDiskCache(networkPolicy))</div><div class="line">                &#123;</div><div class="line">                    builder.noStore();</div><div class="line">                &#125;</div><div class="line">                cacheControl = builder.build();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Request.Builder builder = <span class="keyword">new</span> Request.Builder().url(uri.toString());</div><div class="line">        <span class="keyword">if</span> (cacheControl != <span class="keyword">null</span>)</div><div class="line">        &#123;</div><div class="line">            builder.cacheControl(cacheControl);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        okhttp3.Response response = client.newCall(builder.build()).execute();</div><div class="line">        <span class="keyword">int</span> responseCode = response.code();</div><div class="line">        <span class="keyword">if</span> (responseCode &gt;= <span class="number">300</span>)</div><div class="line">        &#123;</div><div class="line">            response.body().close();</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ResponseException(responseCode + <span class="string">" "</span> + response.message(), networkPolicy,</div><div class="line">                    responseCode);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">boolean</span> fromCache = response.cacheResponse() != <span class="keyword">null</span>;</div><div class="line"></div><div class="line">        ResponseBody responseBody = response.body();</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Response(responseBody.byteStream(), fromCache, responseBody.contentLength());</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">shutdown</span><span class="params">()</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line"></div><div class="line">        Cache cache = client.cache();</div><div class="line">        <span class="keyword">if</span> (cache != <span class="keyword">null</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">try</span></div><div class="line">            &#123;</div><div class="line">                cache.close();</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">catch</span> (IOException ignored)</div><div class="line">            &#123;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>设置拦截器</p>
+</li>
+</ul>
+<blockquote>
+<p>在服务端的响应头里加上Cache-Control 如Cache-Control:<br>max-age=3600，3600表示缓存有效时间为1个小时，即在1个小时之内再次请求同一个url都不会访问网络，在有无网络的情况下都读取缓存，此时，如果想请求最新的内容，应该在构造request的时候使用CacheControl的noCache来实现</p>
+<p>我们可以用okhttp的拦截器Interceptor来实现在本地修改响应头的内容,甚至可以在里面判断wifi,4g,3g来实现不同的缓存策略。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> android.content.Context;</div><div class="line"><span class="keyword">import</span> android.util.Log;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.gaoyy.mishop.util.NetworkUtils;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"></div><div class="line"><span class="keyword">import</span> okhttp3.CacheControl;</div><div class="line"><span class="keyword">import</span> okhttp3.Interceptor;</div><div class="line"><span class="keyword">import</span> okhttp3.Request;</div><div class="line"><span class="keyword">import</span> okhttp3.Response;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Created by gaoyy on 2017/12/18 0018.</span></div><div class="line"><span class="comment"> */</span></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CacheInterceptor</span> <span class="keyword">implements</span> <span class="title">Interceptor</span></span></div><div class="line"><span class="class"></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Context context;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CacheInterceptor</span><span class="params">(Context context)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">this</span>.context = context;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Response <span class="title">intercept</span><span class="params">(Chain chain)</span> <span class="keyword">throws</span> IOException</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        Log.d(<span class="string">"tag"</span>, <span class="string">"Intercept respone"</span>);</div><div class="line"></div><div class="line">        Request request = chain.request();</div><div class="line">        <span class="comment">//如果没有网络，则启用 FORCE_CACHE</span></div><div class="line">        <span class="keyword">if</span> (!NetworkUtils.isNetworkConnected(context))</div><div class="line">        &#123;</div><div class="line">            request = request.newBuilder()</div><div class="line">                    .cacheControl(CacheControl.FORCE_CACHE)</div><div class="line">                    .build();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Response originalResponse = chain.proceed(request);</div><div class="line">        <span class="keyword">if</span> (NetworkUtils.isNetworkConnected(context))</div><div class="line">        &#123;</div><div class="line">            <span class="comment">//有网的时候读接口上的@Headers里的配置</span></div><div class="line">            Log.d(<span class="string">"tag"</span>, <span class="string">"code "</span> + originalResponse.code());</div><div class="line">            String cacheControl = request.cacheControl().toString();</div><div class="line">            <span class="keyword">return</span> originalResponse.newBuilder()</div><div class="line">                    .header(<span class="string">"Cache-Control"</span>, cacheControl)</div><div class="line">                    .removeHeader(<span class="string">"Pragma"</span>)</div><div class="line">                    .build();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            <span class="keyword">return</span> originalResponse.newBuilder()</div><div class="line">                    .header(<span class="string">"Cache-Control"</span>, <span class="string">"public, only-if-cached, max-stale=3600"</span>)</div><div class="line">                    .removeHeader(<span class="string">"Pragma"</span>)</div><div class="line">                    .build();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>在Application中进行配置<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initPicasso</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    File file = <span class="keyword">new</span> File(<span class="keyword">this</span>.getCacheDir(),<span class="string">"Picasso"</span>);</div><div class="line">    OkHttpClient client =<span class="keyword">new</span> OkHttpClient</div><div class="line">            .Builder()</div><div class="line">            .addInterceptor(<span class="keyword">new</span> CacheInterceptor(<span class="keyword">this</span>))</div><div class="line">            .cache(<span class="keyword">new</span> Cache(file, <span class="number">1024</span> * <span class="number">1024</span> * <span class="number">100</span>))</div><div class="line">            .build();</div><div class="line"></div><div class="line">    Picasso picasso = <span class="keyword">new</span> Picasso.Builder(<span class="keyword">this</span>)</div><div class="line">            .defaultBitmapConfig(Bitmap.Config.RGB_565)</div><div class="line">            .downloader(<span class="keyword">new</span> ImageDownLoader(client))</div><div class="line">            .indicatorsEnabled(<span class="keyword">true</span>)</div><div class="line">            .build();</div><div class="line">    Picasso.setSingletonInstance(picasso);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p> 同样也可以对Retrofit进行使用<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(Context context)</span></span></div><div class="line"><span class="function">   </span>&#123;</div><div class="line">       <span class="comment">// 指定缓存路径,缓存大小100Mb</span></div><div class="line">       Cache cache = <span class="keyword">new</span> Cache(<span class="keyword">new</span> File(context.getCacheDir(), <span class="string">"HttpCache"</span>),</div><div class="line">               <span class="number">1024</span> * <span class="number">1024</span> * <span class="number">100</span>);</div><div class="line">       OkHttpClient okHttpClient = <span class="keyword">new</span> OkHttpClient.Builder()</div><div class="line">               .cache(cache)</div><div class="line">               .retryOnConnectionFailure(<span class="keyword">true</span>)</div><div class="line">               .connectTimeout(<span class="number">1500000</span>, TimeUnit.MILLISECONDS)</div><div class="line">               .writeTimeout(<span class="number">2000000</span>, TimeUnit.MILLISECONDS)</div><div class="line">               .readTimeout(<span class="number">2000000</span>, TimeUnit.MILLISECONDS)</div><div class="line">               .addInterceptor(<span class="keyword">new</span> CacheInterceptor(context))</div><div class="line">               .addNetworkInterceptor(<span class="keyword">new</span> CacheInterceptor(context))</div><div class="line">               .build();</div><div class="line"></div><div class="line"></div><div class="line">       Retrofit apiRetrofit = <span class="keyword">new</span> Retrofit.Builder()</div><div class="line">               .baseUrl(Constant.API_BASE)</div><div class="line">               .client(okHttpClient)</div><div class="line">               .addConverterFactory(GsonConverterFactory.create())</div><div class="line">               .build();</div><div class="line"></div><div class="line">       sApiService = apiRetrofit.create(Api.class);</div><div class="line"></div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>参考：<br><a href="http://www.jianshu.com/p/6241950f9daf" target="_blank" rel="external">http://www.jianshu.com/p/6241950f9daf</a><br><a href="http://www.jianshu.com/p/093ca3c1447d" target="_blank" rel="external">http://www.jianshu.com/p/093ca3c1447d</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/06/仿饿了么购物车效果（UI效果）/" rel="next" title="仿饿了么购物车效果（UI效果）">
+                <i class="fa fa-chevron-left"></i> 仿饿了么购物车效果（UI效果）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.jpg"
+                alt="Necrom" />
+            
+              <p class="site-author-name" itemprop="name">Necrom</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/gaoyuyu" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:740514999@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Necrom</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
