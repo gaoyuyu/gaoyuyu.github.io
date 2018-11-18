@@ -79,17 +79,20 @@
 
 
 
-<meta name="description" content="hexo 创建博客文章 hexo new xxx  hexo 提交文章 hexo clean hexo generate 本地调试 hexo server   -&amp;gt;  http://localhost:4000  hexo 部署至github 提交创建的md文件，add-commit-push hexo clean hexo generate hexo deploy">
+<meta name="description" content="BottomSheetDialogFragment的使用很简单12345678910111213141516public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment implements View.OnClickListener&amp;#123;    @Override    public void o">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hexo基础">
-<meta property="og:url" content="http://yoursite.com/2017/12/18/hexo基础/index.html">
+<meta property="og:title" content="BottomSheetDialogFragment 解决背景异常（去掉默认白色方框背景）">
+<meta property="og:url" content="http://yoursite.com/2018/05/23/BottomSheetDialogFragment解决背景异常（去掉默认白色方框背景）/index.html">
 <meta property="og:site_name" content="Necrom&#39;s Blog">
-<meta property="og:description" content="hexo 创建博客文章 hexo new xxx  hexo 提交文章 hexo clean hexo generate 本地调试 hexo server   -&amp;gt;  http://localhost:4000  hexo 部署至github 提交创建的md文件，add-commit-push hexo clean hexo generate hexo deploy">
+<meta property="og:description" content="BottomSheetDialogFragment的使用很简单12345678910111213141516public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment implements View.OnClickListener&amp;#123;    @Override    public void o">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-18T14:34:03.432Z">
+<meta property="og:image" content="https://img-blog.csdn.net/20180523212116898?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0dhb195dXl1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/2018052321284411?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0dhb195dXl1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:updated_time" content="2018-11-18T10:46:55.660Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hexo基础">
-<meta name="twitter:description" content="hexo 创建博客文章 hexo new xxx  hexo 提交文章 hexo clean hexo generate 本地调试 hexo server   -&amp;gt;  http://localhost:4000  hexo 部署至github 提交创建的md文件，add-commit-push hexo clean hexo generate hexo deploy">
+<meta name="twitter:title" content="BottomSheetDialogFragment 解决背景异常（去掉默认白色方框背景）">
+<meta name="twitter:description" content="BottomSheetDialogFragment的使用很简单12345678910111213141516public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment implements View.OnClickListener&amp;#123;    @Override    public void o">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180523212116898?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0dhb195dXl1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 
 
 
@@ -119,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/12/18/hexo基础/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/23/BottomSheetDialogFragment解决背景异常（去掉默认白色方框背景）/"/>
 
 
 
 
 
-  <title>hexo基础 | Necrom's Blog</title>
+  <title>BottomSheetDialogFragment 解决背景异常（去掉默认白色方框背景） | Necrom's Blog</title>
   
 
 
@@ -232,7 +235,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/18/hexo基础/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/23/BottomSheetDialogFragment解决背景异常（去掉默认白色方框背景）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Necrom">
@@ -249,7 +252,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">hexo基础</h1>
+          <h1 class="post-title" itemprop="name headline">BottomSheetDialogFragment 解决背景异常（去掉默认白色方框背景）</h1>
         
 
         <div class="post-meta">
@@ -261,8 +264,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-18T22:25:00+08:00">
-                2017-12-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-23T21:29:21+08:00">
+                2018-05-23
               </time>
             
 
@@ -299,20 +302,14 @@
       
 
       
-        <h3 id="hexo-创建博客文章"><a href="#hexo-创建博客文章" class="headerlink" title="hexo 创建博客文章"></a>hexo 创建博客文章</h3><ol>
-<li>hexo new xxx</li>
-</ol>
-<h3 id="hexo-提交文章"><a href="#hexo-提交文章" class="headerlink" title="hexo 提交文章"></a>hexo 提交文章</h3><ol>
-<li>hexo clean</li>
-<li>hexo generate</li>
-<li>本地调试 hexo server   -&gt;  <a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a></li>
-</ol>
-<h3 id="hexo-部署至github"><a href="#hexo-部署至github" class="headerlink" title="hexo 部署至github"></a>hexo 部署至github</h3><ol>
-<li>提交创建的md文件，add-commit-push</li>
-<li>hexo clean</li>
-<li>hexo generate</li>
-<li>hexo deploy</li>
-</ol>
+        <p>BottomSheetDialogFragment的使用很简单<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomBottomSheetDialogFragment</span> <span class="keyword">extends</span> <span class="title">BottomSheetDialogFragment</span> <span class="keyword">implements</span> <span class="title">View</span>.<span class="title">OnClickListener</span></span></div><div class="line"><span class="class"></span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Nullable</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(@NonNull <span class="keyword">final</span> LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        View rootView = inflater.inflate(R.layout.spec_bottom_sheet, container, <span class="keyword">false</span>);</div><div class="line">        <span class="keyword">return</span> rootView;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p><img src="https://img-blog.csdn.net/20180523212116898?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0dhb195dXl1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>但是默认的布局后面有个白色的背景，不符合需求，需要去掉外层默认的白色背景</p>
+<p>设置Dialog主题即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">    <span class="comment">//设置背景透明，才能显示出layout中诸如圆角的布局，否则会有白色底（框）</span></div><div class="line">    setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"CustomBottomSheetDialogTheme"</span> <span class="attr">parent</span>=<span class="string">"Theme.Design.Light.BottomSheetDialog"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"bottomSheetStyle"</span>&gt;</span>@style/CustomBottomSheetStyle<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></div><div class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"CustomBottomSheetStyle"</span> <span class="attr">parent</span>=<span class="string">"Widget.Design.BottomSheet.Modal"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:background"</span>&gt;</span>@android:color/transparent<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></div><div class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/2018052321284411?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0dhb195dXl1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 
       
     </div>
@@ -337,8 +334,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/12/18/Picasso+Okhttp3缓存优化/" rel="next" title="Picasso+Okhttp3缓存优化">
-                <i class="fa fa-chevron-left"></i> Picasso+Okhttp3缓存优化
+              <a href="/2018/05/23/Okhttp3-编写GET-POST下的Token自动检查并刷新的拦截器（同时适配Okgo库）/" rel="next" title="Okhttp3-编写GET/POST下的Token自动检查并刷新的拦截器（同时适配Okgo库）">
+                <i class="fa fa-chevron-left"></i> Okhttp3-编写GET/POST下的Token自动检查并刷新的拦截器（同时适配Okgo库）
               </a>
             
           </div>
@@ -346,10 +343,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/12/22/集成GoogleMap正确的签名打包姿势/" rel="prev" title="集成GoogleMap正确的签名打包姿势">
-                集成GoogleMap正确的签名打包姿势 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -401,17 +394,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -473,22 +457,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#hexo-创建博客文章"><span class="nav-number">1.</span> <span class="nav-text">hexo 创建博客文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hexo-提交文章"><span class="nav-number">2.</span> <span class="nav-text">hexo 提交文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hexo-部署至github"><span class="nav-number">3.</span> <span class="nav-text">hexo 部署至github</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
